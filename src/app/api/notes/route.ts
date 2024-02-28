@@ -4,8 +4,6 @@ import Connect from "../../../../lib/db";
 
 
 
-
-
 export const GET = async (req : Request )  => {
     await Connect()
     try {
