@@ -1,6 +1,6 @@
 
 
-export default function Notes(){
+export default function UpdateNotes(){
 
 
 
@@ -8,7 +8,7 @@ export default function Notes(){
     <>
       <div className="w-full h-screen flex items-center justify-center bg-black font-[Poppins]">
         <div className="w-[28rem] h-[30rem] rounded-md flex flex-col gap-7 items-center justify-center bg-white">
-          <h1 className="text-2xl font-bold italic">ADD YOUR NOTE HERE</h1>
+          <h1 className="text-2xl font-bold italic">UPDATE YOUR NOTE</h1>
           <div>
             <input type="text" placeholder="Title" className="border border-black w-80 h-14 pl-3 outline-none rounded"/>
           </div>
