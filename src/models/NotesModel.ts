@@ -10,6 +10,6 @@ const NotesSchema = new mongoose.Schema<Notes>({
   description: String
 })
 
-const NotesModel = mongoose.models.User || mongoose.model("Notes", NotesSchema);
+const NotesModel = mongoose.models.Notes || mongoose.model("Notes", NotesSchema);
 
 export default NotesModel
