@@ -3,7 +3,7 @@ import NotesModel from "@/models/NotesModel";
 import Connect from "../../../../lib/db";
 
 export const POST = async (req : Request )  => {
-    await Connect()
+    await Connect();
     try {
       const { title , description } = await req.json()
     await NotesModel.create({ title , description })
@@ -21,7 +21,6 @@ export const POST = async (req : Request )  => {
 }
 
 export const GET = async (req : Request )  => {
-    await Connect()
     try {
     
        const Notes = await NotesModel.find()
