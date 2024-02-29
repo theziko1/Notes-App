@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import Connect from "../../../../lib/db";
 
 export const POST = async (req: Request) => {
-    await Connect();
+  await Connect()
     try {
       const { title, description } = await req.json();
       const newNote = await NotesModel.create({ title, description });
@@ -15,6 +15,7 @@ export const POST = async (req: Request) => {
   
 
 export const GET = async (req: Request) => {
+  await Connect()
   try {
     const Notes = await NotesModel.find();
     return NextResponse.json(Notes);
