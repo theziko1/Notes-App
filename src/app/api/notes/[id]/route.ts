@@ -1,10 +1,11 @@
 import { NextResponse, NextRequest } from "next/server";
 import NotesModel from "../../../../models/NotesModel";
-import "../../../../../lib/db"
+import Connect from "../../../../../lib/db";
 
 
 
 export const GET = async (req : Request , {params} :  {params : {id : string}})  => {
+  await Connect()
     try {
        const { id } = params
        const Notes = await NotesModel.findById(id)
@@ -17,9 +18,10 @@ export const GET = async (req : Request , {params} :  {params : {id : string}}) 
 
 }
 
-export const DELETE = async (request: NextRequest) => {
+export const DELETE = async (request: Request, {params}:{params: {id: string}}) => {
+  await Connect()
     try {
-      const id = request.nextUrl.pathname.split('/').pop();
+      const { id } = params;
       const deletedItem = await NotesModel.findByIdAndDelete(id)
       return NextResponse.json({message: "item deleted Successfully"} + deletedItem)
     } catch (error) {
@@ -28,6 +30,7 @@ export const DELETE = async (request: NextRequest) => {
 }
 
 export const PUT = async (request: Request, {params}:{params: {id: string}}) => {
+  await Connect()
     try {
       const { id } = params;
       const { title, description } = await request.json()

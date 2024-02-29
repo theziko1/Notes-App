@@ -1,54 +1,39 @@
+"use client"
 import Link from "next/link";
 import { FaPen } from "react-icons/fa";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
+import { GetAll , DeleteNote } from "@/lib/features/notes/notesSlice"
+import { AppDispatch, RootState } from "@/lib/store"
+import react ,{  useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-interface NotesInterface {
-  name: string;
-  position: string;
-  createdAt: string;
-  color: string;
-}
+
+
 
 export default function Home() {
-  const Notes: NotesInterface[] = [
-    {
-      name: "Jhon Doe",
-      position: "Jr. Web Developer",
-      createdAt: "May 22, 2025",
-      color: "#FFA500",
-    },
-    {
-      name: "Jane Smith",
-      position: "Sr. Web Developer",
-      createdAt: "May 22, 2025",
-      color: "#89CFF0",
-    },
-    {
-      name: "Alex Johnson",
-      position: "Frontend Developer",
-      createdAt: "May 22, 2025",
-      color: "#BF40BF",
-    },
-    {
-      name: "Emily Brown",
-      position: "UI/UX Designer",
-      createdAt: "May 22, 2025",
-      color: "#FFC300",
-    },
-    {
-      name: "Sarah Wilson",
-      position: "Backend Developer",
-      createdAt: "May 22, 2025",
-      color: "#FFA500",
-    },
-    {
-      name: "Micheal Davis",
-      position: "Fullstack Developer",
-      createdAt: "May 22, 2025",
-      color: "#BF40BF",
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>()
+  const { notes } = useSelector((state : RootState) => state.notes)
+  console.log(notes)
+
+  const handleDelete = (id : any) => {
+      dispatch(DeleteNote(id));
+  };
+
+  useEffect(() => {
+    console.log("const getAUser = async ()");
+    const getAUser = async () => {
+      await dispatch(GetAll());
+    };
+    getAUser();
+  }, [dispatch]);
+
+  const formatDate = (dateString : any) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options as object);
+    return formattedDate;
+  };
+  
   return (
     <main className="min-h-screen px-24 py-10 font-[Poppins]">
       <header className="w-full flex items-center gap-10 mb-12">
@@ -66,27 +51,30 @@ export default function Home() {
         <h1 className="font-bold text-4xl">NOTES</h1>
       </section>
       <section className="w-full flex items-center justify-center">
+
         <div className=" flex items-center gap-14 flex-wrap">
-          {Notes.map((note, index) => (
-            <div
+          {notes?.map((note : any, index : any) => (
+             <div
               key={index}
               className="p-5 flex flex-col justify-between w-[21rem] h-[18rem] overflow-y-auto bg-[#FFA500] rounded-md"
             >
               <div className="gap-3 flex flex-col">
-                <h1 className="font-bold text-2xl">{note.name}</h1>
-                <p className="font-normal text-lg">{note.position}</p>
+                <h1 className="font-bold text-2xl">{note.title}</h1>
+                <p className="font-normal text-lg">{note.description}</p>
               </div>
               <div className="flex items-center justify-between">
-                <p className="font-semibold">{note.createdAt}</p>
+                <p className="font-semibold">{formatDate(note.createdAt)}</p>
                 <div className="flex items-center gap-3">
-                  <Link href="updateNotes">
+                  <Link href={`/updateNotes/${note._id}`}>
                     <FaPen className="w-7 h-7 cursor-pointer hover:scale-125 duration-500"/>
                   </Link>
-                  <MdDeleteForever className="w-8 h-8 cursor-pointer hover:scale-125 duration-500"/>
+                  <MdDeleteForever onClick={() => handleDelete(note._id)}  className="w-8 h-8 cursor-pointer hover:scale-125 duration-500"/>
                 </div>
               </div>
             </div>
-          ))}
+              
+           
+           ))}
         </div>
       </section>
     </main>
