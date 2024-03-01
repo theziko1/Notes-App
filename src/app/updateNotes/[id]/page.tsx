@@ -1,19 +1,25 @@
 "use client"
-import { UpdateNote ,GetOne ,  } from "@/lib/features/notes/notesSlice"
+import { UpdateNote ,GetOne , GetAll } from "@/lib/features/notes/notesSlice"
 import { AppDispatch, RootState } from "@/lib/store"
 import react ,{  useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/navigation";
+  
 
 export default function UpdateNotes({params} : { params : {id : string}}){
+ 
+  const router = useRouter(); 
   const dispatch = useDispatch<AppDispatch>()
   const  {notes }  = useSelector((state : RootState) => state.notes)
+  
+    
   const [title, setTitle] = useState(notes.title)
   const [description, setDescription] = useState(notes.description)
 
-  const handleUpdate = (e: React.FormEvent) => {
+  const handleUpdate =  (e: React.FormEvent) => {
     e.preventDefault(); 
     dispatch(UpdateNote({id : params.id ,title , description}));
-   
+   router.push('/')
   };
 
   useEffect(() => {
@@ -24,11 +30,11 @@ export default function UpdateNotes({params} : { params : {id : string}}){
       setTitle(data.payload?.title)
       setDescription(data.payload?.description)
       console.log("title :"  , data.payload?.title)
-      console.log("desc :"  ,description)
+      console.log("desc :"  ,data.payload?.description)
     };
     getAUser(params);
     
-  }, [ ]);
+  }, [dispatch , params ]);
   return(
     <>
       <div className="w-full h-screen flex items-center justify-center bg-black font-[Poppins]">

@@ -1,6 +1,7 @@
 "use client"
 import { PostNote } from "@/lib/features/notes/notesSlice"
 import { AppDispatch, RootState } from "@/lib/store"
+import { useRouter } from "next/navigation"
 import react ,{  useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -8,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 
 export default function Notes(){
- 
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>()
   const { notes }  = useSelector((state : RootState) => state.notes)
 
@@ -19,6 +20,7 @@ export default function Notes(){
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); 
     dispatch(PostNote({title , description}));
+    router.push('/')
    
   };
 

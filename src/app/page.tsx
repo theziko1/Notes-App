@@ -10,35 +10,28 @@ import { useDispatch, useSelector } from "react-redux"
 
 
 
-
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>()
   const { notes } = useSelector((state : RootState) => state.notes)
-  
 
-  const handleDelete = (id : any) => {
-      dispatch(DeleteNote(id));
+  
+  const handleDelete = async (id : any) => {
+    await dispatch(DeleteNote(id));
+    window.location.reload()
   };
-  
-     // Function to generate random colors
-  function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
-  const colors = notes.map(() => getRandomColor());
 
   useEffect(() => {
-
-    const getAUser = async () => {
+    const getAllNotes = async () => {
       await dispatch(GetAll());
     };
-    getAUser();
-  }, [dispatch]);
+   
+    getAllNotes();
+    
+  }, [dispatch ]);
+
+  if (!Array.isArray(notes)) {
+    return <></>;
+  }
 
   const formatDate = (dateString : any) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -67,9 +60,9 @@ export default function Home() {
         <div className="grid items-center gap-14 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {notes?.map((note : any, index : any) => (
              <div
-             style={{ backgroundColor: colors[index] }}
+            
               key={index}
-              className="p-5 flex flex-col justify-between w-[21rem] h-[18rem] overflow-y-auto text-white rounded-md " 
+              className="p-5 flex flex-col justify-between w-[21rem] h-[18rem] bg-[#FFA500] overflow-y-auto text-white rounded-md " 
             >
               <div className="gap-3 flex flex-col">
                 <h1 className="font-bold text-2xl">{note.title}</h1>
