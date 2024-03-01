@@ -74,18 +74,17 @@ const notesSlice = createSlice({
     })
     .addCase(GetAll.fulfilled,(state,action)=>{
           state.notes = action.payload
-          console.log(action.payload)
+          
     })
     .addCase(GetOne.fulfilled,(state,action)=>{
         state.notes = action.payload
-        console.log(action.payload)
-        
+
     })
     .addCase(UpdateNote.fulfilled,(state,action)=>{
       state.notes = action.payload
   })
   .addCase(DeleteNote.fulfilled,(state,action)=>{
-    state.notes = state.notes.filter(( item : any) => item.id !== action.payload.notes.id);
+      state.notes = state.notes.filter(( item : any) => item.id !== action.payload.notes);
     
   });
   }

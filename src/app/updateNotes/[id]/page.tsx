@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux"
 export default function UpdateNotes({params} : { params : {id : string}}){
   const dispatch = useDispatch<AppDispatch>()
   const  {notes }  = useSelector((state : RootState) => state.notes)
- console.log(notes)
   const [title, setTitle] = useState(notes.title)
   const [description, setDescription] = useState(notes.description)
 
@@ -21,9 +20,7 @@ export default function UpdateNotes({params} : { params : {id : string}}){
     
     const getAUser = async (id : any) => {
       const data  : any | undefined = await dispatch(GetOne(id));
-      
-
-      // console.log("data" ,data.payload?.title.toString )
+    
       setTitle(data.payload?.title)
       setDescription(data.payload?.description)
       console.log("title :"  , data.payload?.title)

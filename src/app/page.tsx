@@ -14,14 +14,26 @@ import { useDispatch, useSelector } from "react-redux"
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>()
   const { notes } = useSelector((state : RootState) => state.notes)
-  console.log(notes)
+  
 
   const handleDelete = (id : any) => {
       dispatch(DeleteNote(id));
   };
+  
+     // Function to generate random colors
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  const colors = notes.map(() => getRandomColor());
 
   useEffect(() => {
-    console.log("const getAUser = async ()");
+
     const getAUser = async () => {
       await dispatch(GetAll());
     };
@@ -52,11 +64,12 @@ export default function Home() {
       </section>
       <section className="w-full flex items-center justify-center">
 
-        <div className=" flex items-center gap-14 flex-wrap">
+        <div className="grid items-center gap-14 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {notes?.map((note : any, index : any) => (
              <div
+             style={{ backgroundColor: colors[index] }}
               key={index}
-              className="p-5 flex flex-col justify-between w-[21rem] h-[18rem] overflow-y-auto bg-[#FFA500] rounded-md"
+              className="p-5 flex flex-col justify-between w-[21rem] h-[18rem] overflow-y-auto text-white rounded-md " 
             >
               <div className="gap-3 flex flex-col">
                 <h1 className="font-bold text-2xl">{note.title}</h1>
