@@ -82,3 +82,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Special thanks to the creators and contributors of Next.js, Redux Toolkit, and TypeScript for providing powerful tools and resources for building modern web applications.
 
 Feel free to reach out with any questions or feedback. Happy coding!
+
