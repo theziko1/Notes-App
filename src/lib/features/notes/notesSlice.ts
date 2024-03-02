@@ -1,6 +1,6 @@
-import { BASE_URL } from "@/utils/constants";
 import { createSlice  , createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+ 
 
 
 interface notes {
@@ -15,7 +15,7 @@ const initialState = {
 
 export const PostNote = createAsyncThunk<{notes : notes}, notes , { rejectValue: string }>('notes/postNote', async (notes ,{ rejectWithValue }) => {
     try {
-        const res = await axios.post(`${BASE_URL}/api/notes`,notes)
+        const res = await axios.post(`/api/notes`,notes)
         console.log(process.env.BASE_URL)
         return res.data
     } catch (error : any) {
@@ -26,7 +26,7 @@ export const PostNote = createAsyncThunk<{notes : notes}, notes , { rejectValue:
 
 export const GetAll = createAsyncThunk('notes/getAll', async () => {
     try {
-        const res = await axios.get(`${BASE_URL}/api/notes`)
+        const res = await axios.get(`/api/notes`)
         return res.data
         
     } catch (error : any) {
@@ -37,7 +37,7 @@ export const GetAll = createAsyncThunk('notes/getAll', async () => {
 
 export const GetOne = createAsyncThunk<{notes : notes}, notes , { rejectValue: string }>('notes/getOne', async (noteId , {rejectWithValue }) => {
      try {
-        const res = await axios.get(`${BASE_URL}/api/notes/${noteId.id}`)
+        const res = await axios.get(`/api/notes/${noteId.id}`)
         return res.data
     } catch (error : any) {
         const message =  error.response.data.error || error.response.data.message
@@ -47,7 +47,7 @@ export const GetOne = createAsyncThunk<{notes : notes}, notes , { rejectValue: s
 
 export const UpdateNote = createAsyncThunk<{notes : notes}, notes , { rejectValue: string }>('notes/Update', async ( notes , {rejectWithValue }) => {
     try {
-        const res = await axios.put(`${BASE_URL}/api/notes/${notes.id}`,notes)
+        const res = await axios.put(`/api/notes/${notes.id}`,notes)
         return res.data
     } catch (error : any) {
         const message =  error.response.data.error || error.response.data.message
@@ -57,7 +57,7 @@ export const UpdateNote = createAsyncThunk<{notes : notes}, notes , { rejectValu
 
 export const DeleteNote = createAsyncThunk<{notes : notes}, notes , { rejectValue: string }>('notes/Delete', async (noteId, {rejectWithValue }) => {
     try {
-        const res = await axios.delete(`${BASE_URL}/api/notes/${noteId}`)
+        const res = await axios.delete(`/api/notes/${noteId}`)
         return res.data
     } catch (error : any) {
         const message =  error.response.data.error || error.response.data.message
