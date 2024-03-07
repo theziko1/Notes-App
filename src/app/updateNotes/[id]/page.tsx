@@ -10,11 +10,11 @@ export default function UpdateNotes({params} : { params : {id : string}}){
  
   const router = useRouter(); 
   const dispatch = useDispatch<AppDispatch>()
-  const  {notes }  = useSelector((state : RootState) => state.notes)
+  const  { note }  = useSelector((state : RootState) => state.notes)
   
     
-  const [title, setTitle] = useState(notes.title)
-  const [description, setDescription] = useState(notes.description)
+  const [title, setTitle] = useState(note.title)
+  const [description, setDescription] = useState(note.description)
 
   const handleUpdate =  (e: React.FormEvent) => {
     e.preventDefault(); 

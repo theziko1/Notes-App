@@ -17,7 +17,7 @@ export default function Home() {
   
   const handleDelete = async (id : any) => {
     await dispatch(DeleteNote(id));
-    window.location.reload()
+    await dispatch(GetAll());
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function Home() {
       <section className="w-full flex items-center justify-center">
 
         <div className="grid items-center gap-14 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {notes?.map((note : any, index : any) => (
+          {notes?.map((note , index ) => (
              <div
             
               key={index}
