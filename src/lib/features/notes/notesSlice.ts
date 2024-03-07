@@ -18,7 +18,7 @@ const initialState:{
      notes : [],
 } as any
 
-export const PostNote = createAsyncThunk('notes/postNote', async (notes ,{ rejectWithValue }) => {
+export const PostNote = createAsyncThunk('notes/postNote', async (notes : Partial<notes> ,{ rejectWithValue }) => {
     try {
         const res = await axios.post(`/api/notes`,notes)
         console.log(process.env.BASE_URL)
@@ -77,7 +77,7 @@ const notesSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(PostNote.fulfilled,(state,action)=>{
-        state.notes?.push(action.payload)
+        state.notes.push(action.payload)
     })
     .addCase(GetAll.fulfilled,(state,action)=>{
           state.notes = action.payload
